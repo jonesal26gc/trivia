@@ -1,6 +1,6 @@
 package com.adaptionsoft.games.trivia;
 
-import com.adaptionsoft.games.trivia.runner.SquareOnTheBoard;
+import com.adaptionsoft.games.uglytrivia.SquareOnTheBoard;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;

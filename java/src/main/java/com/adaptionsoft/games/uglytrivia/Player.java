@@ -1,6 +1,6 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import com.adaptionsoft.games.trivia.runner.SquareOnTheBoard;
+import com.adaptionsoft.games.uglytrivia.SquareOnTheBoard;
 
 public class Player {
     private String name;

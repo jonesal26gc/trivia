@@ -1,4 +1,4 @@
-package com.adaptionsoft.games.trivia.runner;
+package com.adaptionsoft.games.uglytrivia;
 
 /**
  * Created by xm39 on 24/01/2017.

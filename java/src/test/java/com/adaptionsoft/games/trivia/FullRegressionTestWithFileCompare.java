@@ -14,12 +14,12 @@ import static java.nio.file.Files.readAllBytes;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CompleteRegressionTest {
+public class FullRegressionTestWithFileCompare {
     private static final String TESTRUN_FILE_NAME = "run.txt";
     private static final String MASTER_FILE_NAME = "master.txt";
 
     @Test
-    public void runCompleteRegressionTest() throws IOException {
+    public void run() throws IOException {
         writeOutputTo(TESTRUN_FILE_NAME);
 
         runGameTimes(500);

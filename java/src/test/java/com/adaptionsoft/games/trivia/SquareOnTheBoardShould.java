@@ -3,6 +3,9 @@ package com.adaptionsoft.games.trivia;
 import com.adaptionsoft.games.trivia.runner.SquareOnTheBoard;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 public class SquareOnTheBoardShould {
 
     @Test
@@ -11,5 +14,13 @@ public class SquareOnTheBoardShould {
         for (int i = 0; i < 12; i++) {
             System.out.println("Square " + i + "=" + SquareOnTheBoard.getSquareOnTheBoard(i).getSubject().name());
         }
+    }
+
+    @Test
+    public void
+    move_square_on_the_board() {
+        assertThat(SquareOnTheBoard.ZERO.move(1),is(SquareOnTheBoard.ONE));
+        assertThat(SquareOnTheBoard.ZERO.move(5),is(SquareOnTheBoard.FIVE));
+        assertThat(SquareOnTheBoard.SIX.move(6),is(SquareOnTheBoard.ZERO));
     }
 }

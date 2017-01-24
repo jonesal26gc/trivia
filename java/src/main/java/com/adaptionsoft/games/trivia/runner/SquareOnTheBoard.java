@@ -22,12 +22,16 @@ public enum SquareOnTheBoard {
         this.subject = subject;
     }
 
-    public QuestionCategory findSubjectForSquare(int number){
+    public QuestionCategory getSubject() {
+        return subject;
+    }
+
+    public static SquareOnTheBoard getSquareOnTheBoard(int number){
         for (SquareOnTheBoard i : SquareOnTheBoard.values()) {
             if (i.number == number) {
-                return i.subject;
+                return i;
             }
         }
-        return QuestionCategory.POP;
+        return SquareOnTheBoard.ZERO;
     }
 }

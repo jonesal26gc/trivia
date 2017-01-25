@@ -1,8 +1,10 @@
 
 package com.adaptionsoft.games.trivia.runner;
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.adaptionsoft.games.uglytrivia.Game;
+import com.adaptionsoft.games.uglytrivia.Player;
 
 
 public class GameRunner {
@@ -15,6 +17,12 @@ public class GameRunner {
 		aGame.add("Chet");
 		aGame.add("Pat");
 		aGame.add("Sue");
+
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(new Player((players.size()+1),"Chet"));
+		players.add(new Player((players.size()+1),"Pat"));
+		players.add(new Player((players.size()+1),"Sue"));
+
 		
 		Random rand = new Random();
 	

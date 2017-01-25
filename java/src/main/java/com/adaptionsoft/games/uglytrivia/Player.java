@@ -1,16 +1,18 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import com.adaptionsoft.games.uglytrivia.SquareOnTheBoard;
-
 public class Player {
+    private int number;
     private String name;
     private int numberOfGoldenCoins = 0;
     private SquareOnTheBoard squareOnTheBoard = SquareOnTheBoard.ZERO;
     private boolean inThePenaltyBox = false;
     private boolean isGettingOutOfPenaltyBox = false;
 
-    public Player(String name) {
+    public Player(int number, String name) {
+        this.number = number;
         this.name = name;
+        System.out.println(this.name + " was added");
+        System.out.println("They are player number " + this.number);
     }
 
     public boolean isInThePenaltyBox() {
@@ -31,6 +33,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public int getNumberOfGoldenCoins() {

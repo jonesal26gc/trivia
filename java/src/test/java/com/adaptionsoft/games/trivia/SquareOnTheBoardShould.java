@@ -24,4 +24,10 @@ public class SquareOnTheBoardShould {
         assertThat(SquareOnTheBoard.ZERO.move(5),is(SquareOnTheBoard.FIVE));
         assertThat(SquareOnTheBoard.SIX.move(6),is(SquareOnTheBoard.ZERO));
     }
+
+    @Test(expected=RuntimeException.class)
+    public void
+    not_like_invalid_square() {
+        SquareOnTheBoard s = SquareOnTheBoard.getSquareOnTheBoard(12);
+    }
 }

@@ -33,14 +33,14 @@ public enum SquareOnTheBoard {
                 return i;
             }
         }
-        return SquareOnTheBoard.ZERO;
+        throw new RuntimeException("Square number " + number + " is invalid");
     }
 
     public SquareOnTheBoard move(int numberOfSquares) {
-        int newNumber = this.number + numberOfSquares;
-        if (newNumber >= NUMBER_OF_SQUARES_ON_THE_BOARD) {
-            newNumber = newNumber - NUMBER_OF_SQUARES_ON_THE_BOARD;
+        int newSquareNumber = this.number + numberOfSquares;
+        if (newSquareNumber >= NUMBER_OF_SQUARES_ON_THE_BOARD) {
+            newSquareNumber = newSquareNumber - NUMBER_OF_SQUARES_ON_THE_BOARD;
         }
-        return getSquareOnTheBoard(newNumber);
+        return getSquareOnTheBoard(newSquareNumber);
     }
 }

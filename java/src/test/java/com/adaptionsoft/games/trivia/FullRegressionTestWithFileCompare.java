@@ -1,6 +1,7 @@
 package com.adaptionsoft.games.trivia;
 
 import com.adaptionsoft.games.uglytrivia.Game;
+import com.adaptionsoft.games.uglytrivia.Player;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -8,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static java.nio.file.Files.readAllBytes;
@@ -43,28 +45,27 @@ public class FullRegressionTestWithFileCompare {
     }
 
     private void runOneGame(Random rand) {
-        Game aGame = createGame();
-
-        boolean notAWinner;
-        do {
-            aGame.takeTurn(rand.nextInt(5) + 1);
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer();
-            } else {
-                notAWinner = aGame.correctAnswer();
-            }
-        } while (notAWinner);
-    }
-
-    private Game createGame() {
         Game aGame = new Game();
 
-        aGame.add("Chet");
-        aGame.add("Pat");
-        aGame.add("Sue");
+        ArrayList<Player> players = new ArrayList<Player>();
+        players.add(new Player((players.size() + 1), "Chet"));
+        players.add(new Player((players.size() + 1), "Pat"));
+        players.add(new Player((players.size() + 1), "Sue"));
 
-        return aGame;
+        boolean winnerFound=false;
 
+        mainLoop:
+        while (!winnerFound) {
+            for (Player player : players) {
+                aGame.takeTurn(player, rand.nextInt(5) + 1);
+                if (rand.nextInt(9) == 7) {
+                    aGame.wrongAnswer(player);
+                } else {
+                    winnerFound = aGame.correctAnswer(player);
+                    if (winnerFound) { break mainLoop;}
+                }
+            }
+        }
     }
 }
 

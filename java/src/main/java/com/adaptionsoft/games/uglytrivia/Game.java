@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 
 public class Game {
     private static final int GOLDEN_COIN_TARGET = 6;
-    private static final int MINIMUM_NUMBER_OF_PLAYERS = 2;
     private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
 
     private LinkedList popQuestions = new LinkedList();
@@ -46,8 +45,8 @@ public class Game {
         if (player.isInThePenaltyBox()) {
             if (diceValue % 2 != 0) {
                 player.setGettingOutOfPenaltyBox(true);
-
                 System.out.println(player.getName() + " is getting out of the penalty box");
+
                 player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
                 System.out.println(player.getName()
                         + "'s new location is "
@@ -104,10 +103,14 @@ public class Game {
                         + player.getNumberOfGoldenCoins()
                         + " Gold Coins.");
 
+                player.setInThePenaltyBox(false);
+                player.setGettingOutOfPenaltyBox(false);
+
                 return didPlayerWin(player.getNumberOfGoldenCoins());
             } else {
-                return true;
+                return false;
             }
+
         } else {
             System.out.println("Answer was corrent!!!!");
             player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
@@ -124,11 +127,11 @@ public class Game {
         System.out.println("Question was incorrectly answered");
         System.out.println(player.getName() + " was sent to the penalty box");
         player.setInThePenaltyBox(true);
-        return true;
+        player.setGettingOutOfPenaltyBox(false);
+        return false;
     }
 
-
     private boolean didPlayerWin(int numberOfGoldenCoins) {
-        return !(numberOfGoldenCoins == GOLDEN_COIN_TARGET);
+        return (numberOfGoldenCoins == GOLDEN_COIN_TARGET);
     }
 }

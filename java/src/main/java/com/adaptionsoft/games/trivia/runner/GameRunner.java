@@ -11,7 +11,7 @@ import java.util.Random;
 public class GameRunner {
 
     public static void main(String[] args) {
-        boolean notAWinner;
+        boolean winnerFound = false;
         Game aGame = new Game();
 
         ArrayList<Player> players = new ArrayList<Player>();
@@ -20,17 +20,20 @@ public class GameRunner {
         players.add(new Player((players.size() + 1), "Sue"));
 
         Random rand = new Random();
+        mainLoop:
+        while (!winnerFound) {
+            for (Player player : players) {
+                aGame.takeTurn(player, rand.nextInt(5) + 1);
 
-        for (Player player : players) {
-            aGame.takeTurn(player, rand.nextInt(5) + 1);
-
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer(player);
-            } else {
-                notAWinner = aGame.correctAnswer(player);
+                if (rand.nextInt(9) == 7) {
+                    aGame.wrongAnswer(player);
+                } else {
+                    winnerFound = aGame.correctAnswer(player);
+                    if (winnerFound) {
+                        break mainLoop;
+                    }
+                }
             }
-
-            if (!notAWinner) break;
         }
     }
 }

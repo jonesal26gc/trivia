@@ -34,8 +34,8 @@ public class Game {
         return "Sports Question " + i;
     }
 
-    public String createRockQuestion(int index) {
-        return "Rock Question " + index;
+    public String createRockQuestion(int i) {
+        return "Rock Question " + i;
     }
 
     public void takeTurn(Player player, int diceValue) {

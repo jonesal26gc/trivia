@@ -20,6 +20,7 @@ public class GameRunner {
         players.add(new Player((players.size() + 1), "Sue"));
 
         Random rand = new Random();
+
         mainLoop:
         while (!winnerFound) {
             for (Player player : players) {

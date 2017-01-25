@@ -1,5 +1,6 @@
 package com.adaptionsoft.games.trivia;
 
+import com.adaptionsoft.games.uglytrivia.Console;
 import com.adaptionsoft.games.uglytrivia.Game;
 import com.adaptionsoft.games.uglytrivia.Player;
 import org.junit.Test;
@@ -45,27 +46,28 @@ public class FullRegressionTestWithFileCompare {
     }
 
     private void runOneGame(Random rand) {
-        Game aGame = new Game();
+        Console console = new Console();
+        Game aGame = new Game(console);
 
         ArrayList<Player> players = new ArrayList<Player>();
-        players.add(new Player((players.size() + 1), "Chet"));
-        players.add(new Player((players.size() + 1), "Pat"));
-        players.add(new Player((players.size() + 1), "Sue"));
-
-        boolean winnerFound=false;
+        players.add(new Player((players.size() + 1), "Chet", console));
+        players.add(new Player((players.size() + 1), "Pat", console));
+        players.add(new Player((players.size() + 1), "Sue", console));
 
         mainLoop:
-        while (!winnerFound) {
+        while (true) {
             for (Player player : players) {
                 aGame.takeTurn(player, rand.nextInt(5) + 1);
                 if (rand.nextInt(9) == 7) {
                     aGame.wrongAnswer(player);
-                } else {
-                    winnerFound = aGame.correctAnswer(player);
-                    if (winnerFound) { break mainLoop;}
+                    continue;
+                }
+                if (aGame.correctAnswerAndCheckForWin(player)) {
+                    break mainLoop;
                 }
             }
         }
+        System.out.print(console.getStringBuilder().toString());
     }
 }
 

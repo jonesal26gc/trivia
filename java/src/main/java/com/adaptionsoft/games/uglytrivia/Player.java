@@ -7,12 +7,14 @@ public class Player {
     private SquareOnTheBoard squareOnTheBoard = SquareOnTheBoard.ZERO;
     private boolean inThePenaltyBox = false;
     private boolean isGettingOutOfPenaltyBox = false;
+    Console console = new Console();
 
-    public Player(int number, String name) {
+    public Player(int number, String name, Console console) {
         this.number = number;
         this.name = name;
-        System.out.println(this.name + " was added");
-        System.out.println("They are player number " + this.number);
+        this.console = console;
+        console.print(this.name + " was added");
+        console.print("They are player number " + this.number);
     }
 
     public boolean isInThePenaltyBox() {

@@ -12,7 +12,11 @@ public class Game {
     private LinkedList sportsQuestions = new LinkedList();
     private LinkedList rockQuestions = new LinkedList();
 
-    public Game() {
+    private Console console;
+
+    public Game(Console console) {
+        this.console = console;
+
         for (int i = 0; i < NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
             popQuestions.addLast(createPopQuestion(i));
             scienceQuestions.addLast(createScienceQuestion(i));
@@ -38,54 +42,55 @@ public class Game {
     }
 
     public void takeTurn(Player player, int diceValue) {
-        System.out.println(player.getName() + " is the current player");
-        System.out.println("They have rolled a " + diceValue);
+        console.print(player.getName() + " is the current player");
+        console.print("They have rolled a " + diceValue);
 
         if (player.isInThePenaltyBox()) {
             if (diceValue % 2 == 0) {
-                System.out.println(player.getName() + " is not getting out of the penalty box");
+                console.print(player.getName() + " is not getting out of the penalty box");
                 player.setGettingOutOfPenaltyBox(false);
                 return;
             } else {
                 player.setGettingOutOfPenaltyBox(true);
-                System.out.println(player.getName() + " is getting out of the penalty box");
+                console.print(player.getName() + " is getting out of the penalty box");
             }
-            player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
-            System.out.println(player.getName()
-                    + "'s new location is "
-                    + player.getSquareOnTheBoard().number);
-            System.out.println("The category is " + player.getSquareOnTheBoard().getQuestionCategory().label);
-            askQuestion(player.getSquareOnTheBoard().getQuestionCategory());
         }
+        player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
+        console.print(player.getName()
+                + "'s new location is "
+                + player.getSquareOnTheBoard().number);
+        console.print("The category is " + player.getSquareOnTheBoard().getQuestionCategory().label);
+        askQuestion(player.getSquareOnTheBoard().getQuestionCategory());
     }
 
     private void askQuestion(QuestionCategory questionCategory) {
         try {
             switch (questionCategory) {
                 case POP: {
-                    System.out.println(popQuestions.removeFirst());
+                    console.print(popQuestions.removeFirst().toString());
                     break;
                 }
                 case SCIENCE: {
-                    System.out.println(scienceQuestions.removeFirst());
+                    console.print(scienceQuestions.removeFirst().toString());
                     break;
                 }
                 case SPORTS: {
-                    System.out.println(sportsQuestions.removeFirst());
+                    console.print(sportsQuestions.removeFirst().toString());
                     break;
                 }
                 case ROCK: {
-                    System.out.println(rockQuestions.removeFirst());
+                    console.print(rockQuestions.removeFirst().toString());
                     break;
                 }
             }
         } catch (NoSuchElementException ex) {
             ex.printStackTrace();
-            System.out.println("no questions left in the " + questionCategory.label + " category");
+            console.print("no questions left in the " + questionCategory.label + " category");
         }
     }
 
-    public boolean correctAnswer(Player player) {
+    public boolean correctAnswerAndCheckForWin(Player player) {
+        console.print("Answer was correct!!!!");
         if (player.isInThePenaltyBox()) {
             if (!player.isGettingOutOfPenaltyBox()) {
                 return false;
@@ -94,21 +99,18 @@ public class Game {
                 player.setGettingOutOfPenaltyBox(false);
             }
         }
-        System.out.println("Answer was correct!!!!");
         player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
-        System.out.println(player.getName()
+        console.print(player.getName()
                 + " now has "
                 + player.getNumberOfGoldenCoins()
                 + " Gold Coins.");
-
         return (player.getNumberOfGoldenCoins() == GOLDEN_COIN_TARGET);
     }
 
-    public boolean wrongAnswer(Player player) {
-        System.out.println("Question was incorrectly answered");
-        System.out.println(player.getName() + " was sent to the penalty box");
+    public void wrongAnswer(Player player) {
+        console.print("Question was incorrectly answered");
+        console.print(player.getName() + " was sent to the penalty box");
         player.setInThePenaltyBox(true);
         player.setGettingOutOfPenaltyBox(false);
-        return false;
     }
 }

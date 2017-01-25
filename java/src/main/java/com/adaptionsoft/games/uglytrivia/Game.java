@@ -1,6 +1,5 @@
 package com.adaptionsoft.games.uglytrivia;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -43,21 +42,14 @@ public class Game {
         System.out.println("They have rolled a " + diceValue);
 
         if (player.isInThePenaltyBox()) {
-            if (diceValue % 2 != 0) {
-                player.setGettingOutOfPenaltyBox(true);
-                System.out.println(player.getName() + " is getting out of the penalty box");
-
-                player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
-                System.out.println(player.getName()
-                        + "'s new location is "
-                        + player.getSquareOnTheBoard().number);
-                System.out.println("The category is " + player.getSquareOnTheBoard().getQuestionCategory().label);
-                askQuestion(player.getSquareOnTheBoard().getQuestionCategory());
-            } else {
+            if (diceValue % 2 == 0) {
                 System.out.println(player.getName() + " is not getting out of the penalty box");
                 player.setGettingOutOfPenaltyBox(false);
+                return;
+            } else {
+                player.setGettingOutOfPenaltyBox(true);
+                System.out.println(player.getName() + " is getting out of the penalty box");
             }
-        } else {
             player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
             System.out.println(player.getName()
                     + "'s new location is "
@@ -74,53 +66,42 @@ public class Game {
                     System.out.println(popQuestions.removeFirst());
                     break;
                 }
-                case SCIENCE:{
+                case SCIENCE: {
                     System.out.println(scienceQuestions.removeFirst());
                     break;
                 }
-                case SPORTS:{
+                case SPORTS: {
                     System.out.println(sportsQuestions.removeFirst());
                     break;
                 }
-                case ROCK:{
+                case ROCK: {
                     System.out.println(rockQuestions.removeFirst());
                     break;
                 }
             }
         } catch (NoSuchElementException ex) {
             ex.printStackTrace();
-            System.out.println("no questions left");
+            System.out.println("no questions left in the " + questionCategory.label + " category");
         }
     }
 
     public boolean correctAnswer(Player player) {
         if (player.isInThePenaltyBox()) {
-            if (player.isGettingOutOfPenaltyBox()) {
-                System.out.println("Answer was correct!!!!");
-                player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
-                System.out.println(player.getName()
-                        + " now has "
-                        + player.getNumberOfGoldenCoins()
-                        + " Gold Coins.");
-
+            if (!player.isGettingOutOfPenaltyBox()) {
+                return false;
+            } else {
                 player.setInThePenaltyBox(false);
                 player.setGettingOutOfPenaltyBox(false);
-
-                return didPlayerWin(player.getNumberOfGoldenCoins());
-            } else {
-                return false;
             }
-
-        } else {
-            System.out.println("Answer was corrent!!!!");
-            player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
-            System.out.println(player.getName()
-                    + " now has "
-                    + player.getNumberOfGoldenCoins()
-                    + " Gold Coins.");
-
-            return didPlayerWin(player.getNumberOfGoldenCoins());
         }
+        System.out.println("Answer was correct!!!!");
+        player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
+        System.out.println(player.getName()
+                + " now has "
+                + player.getNumberOfGoldenCoins()
+                + " Gold Coins.");
+
+        return (player.getNumberOfGoldenCoins() == GOLDEN_COIN_TARGET);
     }
 
     public boolean wrongAnswer(Player player) {
@@ -129,9 +110,5 @@ public class Game {
         player.setInThePenaltyBox(true);
         player.setGettingOutOfPenaltyBox(false);
         return false;
-    }
-
-    private boolean didPlayerWin(int numberOfGoldenCoins) {
-        return (numberOfGoldenCoins == GOLDEN_COIN_TARGET);
     }
 }

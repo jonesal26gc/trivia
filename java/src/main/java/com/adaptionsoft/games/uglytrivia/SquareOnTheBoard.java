@@ -14,16 +14,17 @@ public enum SquareOnTheBoard {
     TEN(10, QuestionCategory.SPORTS),
     ELEVEN(11, QuestionCategory.ROCK);
 
+    static final int NUMBER_OF_SQUARES_ON_THE_BOARD = 12;
     int number;
-    QuestionCategory subject;
+    QuestionCategory questionCategory;
 
     SquareOnTheBoard(int number, QuestionCategory subject) {
         this.number = number;
-        this.subject = subject;
+        this.questionCategory = subject;
     }
 
-    public QuestionCategory getSubject() {
-        return subject;
+    public QuestionCategory getQuestionCategory() {
+        return questionCategory;
     }
 
     public static SquareOnTheBoard getSquareOnTheBoard(int number) {
@@ -37,8 +38,8 @@ public enum SquareOnTheBoard {
 
     public SquareOnTheBoard move(int numberOfSquares) {
         int newNumber = this.number + numberOfSquares;
-        if (newNumber > 11) {
-            newNumber = newNumber - 12;
+        if (newNumber >= NUMBER_OF_SQUARES_ON_THE_BOARD) {
+            newNumber = newNumber - NUMBER_OF_SQUARES_ON_THE_BOARD;
         }
         return getSquareOnTheBoard(newNumber);
     }

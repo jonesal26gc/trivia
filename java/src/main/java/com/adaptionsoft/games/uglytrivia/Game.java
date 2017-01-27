@@ -65,32 +65,6 @@ public class Game {
 
     private void askQuestion(QuestionCategory questionCategory) {
         try {
-            switch (questionCategory) {
-                case POP: {
-                    console.print(popQuestions.removeFirst().toString());
-                    break;
-                }
-                case SCIENCE: {
-                    console.print(scienceQuestions.removeFirst().toString());
-                    break;
-                }
-                case SPORTS: {
-                    console.print(sportsQuestions.removeFirst().toString());
-                    break;
-                }
-                case ROCK: {
-                    console.print(rockQuestions.removeFirst().toString());
-                    break;
-                }
-            }
-        } catch (NoSuchElementException ex) {
-            ex.printStackTrace();
-            console.print("no questions left in the " + questionCategory.label + " category");
-        }
-    }
-
-    private void askQuestion2(QuestionCategory questionCategory) {
-        try {
             LinkedList listToExtractFrom = getQuestionsForCategory(questionCategory);
             console.print(listToExtractFrom.removeFirst().toString());
         } catch (NoSuchElementException ex) {
@@ -103,15 +77,12 @@ public class Game {
         switch (questionCategory) {
             case POP:
                 return popQuestions;
-
             case SCIENCE:
                 return scienceQuestions;
-
             case SPORTS:
                 return sportsQuestions;
-
-            default:
             case ROCK:
+            default:
                 return rockQuestions;
         }
     }
@@ -119,12 +90,8 @@ public class Game {
     public boolean correctAnswerAndCheckForWin(Player player) {
         console.print("Answer was correct!!!!");
         if (player.isInThePenaltyBox()) {
-            if (!player.isGettingOutOfPenaltyBox()) {
-                return false;
-            } else {
-                player.setInThePenaltyBox(false);
-                player.setGettingOutOfPenaltyBox(false);
-            }
+            player.setInThePenaltyBox(false);
+            player.setGettingOutOfPenaltyBox(false);
         }
         player.setNumberOfGoldenCoins(player.getNumberOfGoldenCoins() + 1);
         console.print(player.getName()

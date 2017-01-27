@@ -10,6 +10,13 @@ import java.util.Random;
 
 
 public class GameRunner {
+    /******************************************************
+     * This is a board game is which there are 12 squares.
+     * You must answer a question correctly, else you go into the
+     * penalty box. Throwing an odd number gets you out of the penalty box.
+     * With each correct answer, you collect a gold coin.
+     * 6 gold coins wins the game.
+     */
 
     public static void main(String[] args) {
         Console console = new Console();
@@ -26,7 +33,10 @@ public class GameRunner {
         while (true) {
             for (Player player : players) {
                 aGame.takeTurn(player, rand.nextInt(5) + 1);
-
+                if (player.isInThePenaltyBox()
+                        & !player.isGettingOutOfPenaltyBox()) {
+                    continue;
+                }
                 if (rand.nextInt(9) == 7) {
                     aGame.wrongAnswer(player);
                     continue;

@@ -25,7 +25,7 @@ public class FullRegressionTestWithFileCompare {
     public void run() throws IOException {
         writeOutputTo(TESTRUN_FILE_NAME);
 
-        runGameTimes(500);
+        runGameTimes(10);
 
         assertThat(readFile(TESTRUN_FILE_NAME), is(readFile(MASTER_FILE_NAME)));
     }
@@ -58,6 +58,10 @@ public class FullRegressionTestWithFileCompare {
         while (true) {
             for (Player player : players) {
                 aGame.takeTurn(player, rand.nextInt(5) + 1);
+                if (player.isInThePenaltyBox()
+                        & !player.isGettingOutOfPenaltyBox()) {
+                    continue;
+                }
                 if (rand.nextInt(9) == 7) {
                     aGame.wrongAnswer(player);
                     continue;
@@ -67,6 +71,7 @@ public class FullRegressionTestWithFileCompare {
                 }
             }
         }
+        console.print("Winner!");
         System.out.print(console.getStringBuilder().toString());
     }
 }

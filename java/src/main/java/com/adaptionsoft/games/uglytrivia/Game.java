@@ -58,7 +58,7 @@ public class Game {
         player.setSquareOnTheBoard(player.getSquareOnTheBoard().move(diceValue));
         console.print(player.getName()
                 + "'s new location is "
-                + player.getSquareOnTheBoard().number);
+                + player.getSquareOnTheBoard().ordinal());
         console.print("The category is " + player.getSquareOnTheBoard().getQuestionCategory().label);
         askQuestion(player.getSquareOnTheBoard().getQuestionCategory());
     }
@@ -86,6 +86,33 @@ public class Game {
         } catch (NoSuchElementException ex) {
             ex.printStackTrace();
             console.print("no questions left in the " + questionCategory.label + " category");
+        }
+    }
+
+    private void askQuestion2(QuestionCategory questionCategory) {
+        try {
+            LinkedList listToExtractFrom = getQuestionsForCategory(questionCategory);
+            console.print(listToExtractFrom.removeFirst().toString());
+        } catch (NoSuchElementException ex) {
+            ex.printStackTrace();
+            console.print("no questions left in the " + questionCategory.label + " category");
+        }
+    }
+
+    private LinkedList getQuestionsForCategory(QuestionCategory questionCategory) {
+        switch (questionCategory) {
+            case POP:
+                return popQuestions;
+
+            case SCIENCE:
+                return scienceQuestions;
+
+            case SPORTS:
+                return sportsQuestions;
+
+            default:
+            case ROCK:
+                return rockQuestions;
         }
     }
 

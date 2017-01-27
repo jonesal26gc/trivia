@@ -1,25 +1,25 @@
 package com.adaptionsoft.games.uglytrivia;
 
+import static com.adaptionsoft.games.uglytrivia.QuestionCategory.*;
+
 public enum SquareOnTheBoard {
-    ZERO(0, QuestionCategory.POP),
-    ONE(1, QuestionCategory.SCIENCE),
-    TWO(2, QuestionCategory.SPORTS),
-    THREE(3, QuestionCategory.ROCK),
-    FOUR(4, QuestionCategory.POP),
-    FIVE(5, QuestionCategory.SCIENCE),
-    SIX(6, QuestionCategory.SPORTS),
-    SEVEN(7, QuestionCategory.ROCK),
-    EIGHT(8, QuestionCategory.POP),
-    NINE(9, QuestionCategory.SCIENCE),
-    TEN(10, QuestionCategory.SPORTS),
-    ELEVEN(11, QuestionCategory.ROCK);
+    ZERO(POP),
+    ONE(SCIENCE),
+    TWO(SPORTS),
+    THREE(ROCK),
+    FOUR(POP),
+    FIVE(SCIENCE),
+    SIX(SPORTS),
+    SEVEN(ROCK),
+    EIGHT(POP),
+    NINE(SCIENCE),
+    TEN(SPORTS),
+    ELEVEN(ROCK);
 
-    static final int NUMBER_OF_SQUARES_ON_THE_BOARD = 12;
-    int number;
-    QuestionCategory questionCategory;
+    private static final int NUMBER_OF_SQUARES_ON_THE_BOARD = SquareOnTheBoard.values().length;
+    private QuestionCategory questionCategory;
 
-    SquareOnTheBoard(int number, QuestionCategory subject) {
-        this.number = number;
+    SquareOnTheBoard(QuestionCategory subject) {
         this.questionCategory = subject;
     }
 
@@ -28,16 +28,15 @@ public enum SquareOnTheBoard {
     }
 
     public static SquareOnTheBoard getSquareOnTheBoard(int number) {
-        for (SquareOnTheBoard i : SquareOnTheBoard.values()) {
-            if (i.number == number) {
-                return i;
-            }
+        try {
+            return SquareOnTheBoard.values()[number];
+        } catch (IndexOutOfBoundsException ex) {
+            throw new RuntimeException("Square number " + number + " is invalid");
         }
-        throw new RuntimeException("Square number " + number + " is invalid");
     }
 
     public SquareOnTheBoard move(int numberOfSquares) {
-        int newSquareNumber = this.number + numberOfSquares;
+        int newSquareNumber = this.ordinal() + numberOfSquares;
         if (newSquareNumber >= NUMBER_OF_SQUARES_ON_THE_BOARD) {
             newSquareNumber = newSquareNumber - NUMBER_OF_SQUARES_ON_THE_BOARD;
         }

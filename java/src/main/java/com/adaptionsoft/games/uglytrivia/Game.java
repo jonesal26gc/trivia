@@ -46,7 +46,7 @@ public class Game {
         console.print("They have rolled a " + diceValue);
 
         if (player.isInThePenaltyBox()) {
-            if (diceValue % 2 == 0) {
+            if (isEven(diceValue)) {
                 console.print(player.getName() + " is not getting out of the penalty box");
                 player.setGettingOutOfPenaltyBox(false);
                 return;
@@ -61,6 +61,10 @@ public class Game {
                 + player.getSquareOnTheBoard().ordinal());
         console.print("The category is " + player.getSquareOnTheBoard().getQuestionCategory().label);
         askQuestion(player.getSquareOnTheBoard().getQuestionCategory());
+    }
+
+    private boolean isEven(int diceValue) {
+        return diceValue % 2 == 0;
     }
 
     private void askQuestion(QuestionCategory questionCategory) {

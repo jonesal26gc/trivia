@@ -38,7 +38,7 @@ public enum SquareOnTheBoard {
     public SquareOnTheBoard move(int numberOfSquares) {
         int newSquareNumber = this.ordinal() + numberOfSquares;
         if (newSquareNumber >= NUMBER_OF_SQUARES_ON_THE_BOARD) {
-            newSquareNumber = newSquareNumber - NUMBER_OF_SQUARES_ON_THE_BOARD;
+            newSquareNumber -= NUMBER_OF_SQUARES_ON_THE_BOARD;
         }
         return getSquareOnTheBoard(newSquareNumber);
     }
